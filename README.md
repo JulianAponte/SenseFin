@@ -76,7 +76,7 @@ Ir a `http://localhost:8080`
 
 El sidebar derecho se oculta/muestra con el botón `▶` (chevron). Ambos sidebars persisten al cambiar de vista — solo el contenido central cambia.
 
-## Paleta de colores (Stitch)
+## Paleta de colores
 
 | Uso | Color |
 |-----|-------|

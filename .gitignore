@@ -1,0 +1,6 @@
+CODIGOS_FUENTE/
+Update.md
+node_modules/
+.DS_Store
+.gemini/
+*.log

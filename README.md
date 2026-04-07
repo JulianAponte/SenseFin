@@ -1,6 +1,6 @@
 # SenseFin — Panel de Finanzas Personales
 
-Panel financiero single-page application (SPA) desarrollado con HTML, CSS y JavaScript vanilla. Sin frameworks ni dependencias externas. Diseño basado en los prototipos de Stitch (Google).
+Panel financiero single-page application (SPA) desarrollado con HTML, CSS y JavaScript vanilla. Sin frameworks ni dependencias externas.
 
 ## Vista previa
 
@@ -20,22 +20,18 @@ Front_SenseFin/
 │   ├── variables.css       # Tokens: #1142d4 primary, #030712 bg, accent colors
 │   ├── layout.css          # Flex 3-columns, sidebar toggle, scrollbars
 │   └── components.css      # Glass-cards, buttons, badges, tables, modals
-├── js/
-│   ├── app.js              # Router SPA, nav binding, sidebar toggle
-│   ├── data/
-│   │   └── mockData.js     # Transacciones, pagos, recibos, trends, user
-│   ├── views/
-│   │   ├── dashboard.js    # Dashboard (SVG donut)
-│   │   ├── historial.js    # History (tabla filtrable)
-│   │   ├── recibos.js      # Receipts (grid cards)
-│   │   └── insights.js     # Insights (canvas charts)
-│   └── components/
-│       ├── sidebar.js      # Sidebar: perfil, pagos, tip, calendario
-│       └── modal.js        # Modales: add income/expense/reminder
-├── CODIGOS_FUENTE/         # HTML de referencia (Stitch exports)
-├── Preparación/            # Documentos de planificación
-├── README.md
-└── Update.md
+└── js/
+   ├── app.js              # Router SPA, nav binding, sidebar toggle
+   ├── data/
+   │   └── mockData.js     # Transacciones, pagos, recibos, trends, user
+   ├── views/
+   │   ├── dashboard.js    # Dashboard (SVG donut)
+   │   ├── historial.js    # History (tabla filtrable)
+   │   ├── recibos.js      # Receipts (grid cards)
+   │   └── insights.js     # Insights (canvas charts)
+   └── components/
+       ├── sidebar.js      # Sidebar: perfil, pagos, tip, calendario
+       └── modal.js        # Modales: add income/expense/reminder
 ```
 
 ## Cómo ejecutar

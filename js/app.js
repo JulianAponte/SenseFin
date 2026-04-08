@@ -1,15 +1,17 @@
 import { renderDashboard, initDashboard } from './views/dashboard.js';
-import { renderHistorial, initHistorial } from './views/historial.js';
-import { renderRecibos, initRecibos } from './views/recibos.js';
+import { renderHistory, initHistory } from './views/history.js';
+import { renderReceipts, initReceipts } from './views/receipts.js';
 import { renderInsights, initInsights } from './views/insights.js';
 import { renderRightSidebar, initRightSidebar, renderCalendar } from './components/sidebar.js';
 import { openModal } from './components/modal.js';
+import { t } from './i18n.js';
+import { getLanguage, setLanguage } from './state/store.js';
 
 const views = {
     dashboard: { render: renderDashboard, init: initDashboard },
-    historial: { render: renderHistorial, init: initHistorial },
-    recibos:   { render: renderRecibos,   init: initRecibos },
-    insights:  { render: renderInsights,  init: initInsights }
+    history: { render: renderHistory, init: initHistory },
+    receipts: { render: renderReceipts, init: initReceipts },
+    insights: { render: renderInsights, init: initInsights }
 };
 
 const app = {
@@ -17,49 +19,144 @@ const app = {
 
     init() {
         this.bindNav();
-        this.bindSidebarToggle();
+        this.bindLayoutControls();
         this.refreshSidebar();
-        renderCalendar(2023, 9);
+        this.refreshNavigationLabels();
+        this.syncResponsiveState();
         this.navigate('dashboard');
+        window.addEventListener('resize', () => this.syncResponsiveState());
     },
 
     navigate(viewName) {
         if (!views[viewName]) return;
         this.currentView = viewName;
+
         const main = document.getElementById('main-content');
+        if (!main) return;
+
         main.innerHTML = views[viewName].render();
         views[viewName].init();
+
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.classList.toggle('active', item.dataset.view === viewName);
+            const isActive = item.dataset.view === viewName;
+            item.classList.toggle('active', isActive);
+            item.setAttribute('aria-current', isActive ? 'page' : 'false');
+
             const icon = item.querySelector('.material-symbols-outlined');
-            if (icon) icon.classList.toggle('fill-1', item.dataset.view === viewName);
+            if (icon) icon.classList.toggle('fill-1', isActive);
         });
+
+        this.closeMobileSidebar();
+    },
+
+    rerender() {
+        this.refreshNavigationLabels();
+        this.refreshSidebar();
+        this.navigate(this.currentView);
+    },
+
+    refreshNavigationLabels() {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            const label = item.querySelector('[data-nav-label]');
+            if (label) label.textContent = t(`common.${item.dataset.labelKey}`);
+        });
+
+        const menuButton = document.getElementById('mobile-nav-toggle');
+        if (menuButton) menuButton.title = t('common.mobileMenu');
+
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        if (sidebarToggle) sidebarToggle.title = t('sidebar.openRightPanel');
     },
 
     bindNav() {
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', e => { e.preventDefault(); this.navigate(item.dataset.view); });
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                this.navigate(item.dataset.view);
+            });
         });
     },
 
-    bindSidebarToggle() {
-        const btn = document.getElementById('sidebar-toggle');
-        const sidebar = document.getElementById('right-sidebar');
-        if (!btn || !sidebar) return;
+    bindLayoutControls() {
+        const navToggle = document.getElementById('mobile-nav-toggle');
+        const appOverlay = document.getElementById('app-overlay');
+        const rightSidebar = document.getElementById('right-sidebar');
+        const rightToggle = document.getElementById('sidebar-toggle');
 
-        btn.addEventListener('click', () => {
-            const isCollapsed = sidebar.classList.toggle('collapsed');
-            btn.classList.toggle('shifted', isCollapsed);
+        navToggle?.addEventListener('click', () => {
+            document.querySelector('.sidebar-left')?.classList.toggle('mobile-open');
+            document.body.classList.toggle('overlay-active');
         });
+
+        appOverlay?.addEventListener('click', () => {
+            this.closeMobileSidebar();
+            if (window.innerWidth <= 1180) {
+                rightSidebar?.classList.add('collapsed');
+                rightToggle?.classList.add('shifted');
+                document.body.classList.remove('overlay-active');
+            }
+        });
+
+        rightToggle?.addEventListener('click', () => {
+            if (window.innerWidth <= 1180) {
+                const isCollapsed = rightSidebar?.classList.toggle('collapsed');
+                rightToggle.classList.toggle('shifted', isCollapsed);
+                document.body.classList.toggle('overlay-active', !isCollapsed);
+                return;
+            }
+
+            const isCollapsed = rightSidebar?.classList.toggle('collapsed');
+            rightToggle.classList.toggle('shifted', isCollapsed);
+        });
+    },
+
+    syncResponsiveState() {
+        const rightSidebar = document.getElementById('right-sidebar');
+        const rightToggle = document.getElementById('sidebar-toggle');
+
+        if (!rightSidebar || !rightToggle) return;
+
+        if (window.innerWidth <= 1180) {
+            rightSidebar.classList.add('collapsed');
+            rightToggle.classList.add('shifted');
+            document.body.classList.remove('overlay-active');
+        } else {
+            document.querySelector('.sidebar-left')?.classList.remove('mobile-open');
+            document.body.classList.remove('overlay-active');
+            rightSidebar.classList.remove('collapsed');
+            rightToggle.classList.remove('shifted');
+        }
+    },
+
+    closeMobileSidebar() {
+        document.querySelector('.sidebar-left')?.classList.remove('mobile-open');
+        if (window.innerWidth <= 1180) document.body.classList.remove('overlay-active');
     },
 
     refreshSidebar() {
-        const el = document.getElementById('sidebar-right-content');
-        if (el) { el.innerHTML = renderRightSidebar(); initRightSidebar(); }
+        const container = document.getElementById('sidebar-right-content');
+        if (!container) return;
+        container.innerHTML = renderRightSidebar();
+        initRightSidebar();
+
+        const today = new Date();
+        renderCalendar(today.getFullYear(), today.getMonth());
     },
 
-    openModal(type, data) { openModal(type, data); }
+    toggleLanguage() {
+        const nextLanguage = getLanguage() === 'es' ? 'en' : 'es';
+        setLanguage(nextLanguage);
+        document.documentElement.lang = nextLanguage;
+        this.rerender();
+    },
+
+    openModal(type, data) {
+        openModal(type, data);
+    }
 };
 
 window.app = app;
-document.addEventListener('DOMContentLoaded', () => app.init());
+document.addEventListener('DOMContentLoaded', () => {
+    document.documentElement.lang = getLanguage();
+    app.init();
+});

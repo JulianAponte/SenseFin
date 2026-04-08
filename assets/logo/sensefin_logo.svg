@@ -1,0 +1,60 @@
+<svg width="100%" viewBox="0 0 680 400" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">SenseFin Logo</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo para SenseFin Intelligence: ícono modular con gradiente y tipografía moderna</desc>
+
+  <defs>
+    <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5A0"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="arcGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+    <linearGradient id="blockGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5A0"/>
+      <stop offset="100%" stop-color="#00B4D8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── VERSIÓN OSCURA (sobre fondo dark como el dashboard) ── -->
+
+  <!-- Fondo redondeado oscuro para simular contexto -->
+  <rect x="60" y="30" width="560" height="340" rx="20" fill="#0D1B2A" style="fill:rgb(13, 27, 42);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- ── ÍCONO ── -->
+  <!-- Bloque cuadrado base (esquina inferior izquierda del ícono) -->
+  <rect x="218" y="198" width="38" height="38" rx="6" fill="url(#blockGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Bloque medio -->
+  <rect x="260" y="178" width="38" height="58" rx="6" fill="url(#arcGrad2)" opacity="0.85" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.85;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Bloque alto -->
+  <rect x="302" y="148" width="38" height="88" rx="6" fill="url(#arcGrad1)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Arco decorativo — cuarto de círculo tenue alrededor de los bloques -->
+  <path d="M 218 236 A 84 84 0 0 1 340 152" fill="none" stroke="url(#arcGrad1)" stroke-width="2.5" stroke-linecap="round" opacity="0.35" style="fill:none;color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <path d="M 218 236 A 114 114 0 0 1 340 122" fill="none" stroke="url(#arcGrad2)" stroke-width="1.5" stroke-linecap="round" opacity="0.2" style="fill:none;color:rgb(255, 255, 255);stroke-width:1.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.2;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Punto decorativo -->
+  <circle cx="340" cy="152" r="4" fill="#00E5A0" opacity="0.7" style="fill:rgb(0, 229, 160);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.7;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- ── LOGOTIPO TEXTO ── -->
+  <text x="362" y="195" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" letter-spacing="-1" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:38px;font-weight:700;text-anchor:start;dominant-baseline:auto">Sense</text>
+  <text x="362" y="195" font-family="system-ui, -apple-system, sans-serif" font-size="38" font-weight="700" letter-spacing="-1" fill="url(#arcGrad1)" dx="108" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:38px;font-weight:700;text-anchor:start;dominant-baseline:auto">Fin</text>
+
+  <!-- Subtítulo -->
+  <text x="363" y="218" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="400" fill="#6B8FA8" letter-spacing="3" style="fill:rgb(107, 143, 168);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, -apple-system, sans-serif;font-size:11px;font-weight:400;text-anchor:start;dominant-baseline:auto">INTELLIGENCE</text>
+
+  <!-- Línea separadora sutil bajo el ícono -->
+  <line x1="218" y1="252" x2="340" y2="252" stroke="#1E3A4A" stroke-width="1" style="fill:rgb(0, 0, 0);stroke:rgb(30, 58, 74);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- ── VERSIÓN CLARA (sobre blanco) ── -->
+  <rect x="60" y="30" width="0" height="0" rx="20" fill="transparent" style="fill:rgba(0, 0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Label pequeño -->
+  <text x="340" y="330" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#3A6073" letter-spacing="1" style="fill:rgb(58, 96, 115);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:system-ui, sans-serif;font-size:11px;font-weight:400;text-anchor:middle;dominant-baseline:auto">sobre fondo oscuro</text>
+
+  <!-- ── VERSIÓN SOBRE FONDO CLARO ── -->
+  <rect x="100" y="355" width="480" height="0" rx="8" fill="#F5F7FA" style="fill:rgb(245, 247, 250);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</svg>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html class="dark" lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SenseFin — Panel inteligente de finanzas personales. Dashboard premium con gestión de gastos, insights y recibos.">
+    <meta name="description" content="SenseFin — Smart personal finance dashboard with budgeting, receipts, exports and multilingual controls.">
     <title>SenseFin — Finance Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/layout.css">
@@ -19,36 +19,39 @@
     </style>
 </head>
 <body>
-    <div class="app-layout">
+    <div class="app-overlay" id="app-overlay"></div>
+    <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Open navigation">
+        <span class="material-symbols-outlined">menu</span>
+    </button>
 
-        <!-- LEFT SIDEBAR -->
+    <div class="app-layout">
         <aside class="sidebar-left">
-            <a class="sidebar-logo" href="#">
-                <div class="sidebar-logo-icon">
-                    <span class="material-symbols-outlined">account_balance_wallet</span>
-                </div>
+            <a class="sidebar-logo" href="#" aria-label="SenseFin home">
+                <img class="sidebar-logo-mark" src="assets/logo/sensefin_mark.svg" alt="SenseFin mark">
                 <div class="sidebar-logo-text">
-                    <span class="sidebar-logo-name">SenseFin</span>
-                    <span class="sidebar-logo-subtitle">Intelligence</span>
+                    <span class="sidebar-logo-name">
+                        <span class="sidebar-logo-sense">Sense</span><span class="sidebar-logo-fin">Fin</span>
+                    </span>
+                    <span class="sidebar-logo-subtitle">INTELLIGENCE</span>
                 </div>
             </a>
 
             <nav class="sidebar-nav">
-                <button class="nav-item active" data-view="dashboard">
+                <button class="nav-item active" data-view="dashboard" data-label-key="dashboard">
                     <span class="material-symbols-outlined fill-1">dashboard</span>
-                    <span>Dashboard</span>
+                    <span data-nav-label>Dashboard</span>
                 </button>
-                <button class="nav-item" data-view="historial">
+                <button class="nav-item" data-view="history" data-label-key="history">
                     <span class="material-symbols-outlined">history</span>
-                    <span>History</span>
+                    <span data-nav-label>History</span>
                 </button>
-                <button class="nav-item" data-view="recibos">
+                <button class="nav-item" data-view="receipts" data-label-key="receipts">
                     <span class="material-symbols-outlined">receipt_long</span>
-                    <span>Receipts</span>
+                    <span data-nav-label>Receipts</span>
                 </button>
-                <button class="nav-item" data-view="insights">
+                <button class="nav-item" data-view="insights" data-label-key="insights">
                     <span class="material-symbols-outlined">trending_up</span>
-                    <span>Insights</span>
+                    <span data-nav-label>Insights</span>
                 </button>
             </nav>
 
@@ -57,21 +60,18 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content" id="main-content"></main>
 
-        <!-- RIGHT SIDEBAR + TOGGLE -->
         <div class="sidebar-toggle-wrap">
             <aside class="sidebar-right" id="right-sidebar">
                 <div class="sidebar-right-inner" id="sidebar-right-content"></div>
             </aside>
-            <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle sidebar">
+            <button class="sidebar-toggle-btn" id="sidebar-toggle" title="Toggle right sidebar">
                 <span class="material-symbols-outlined">chevron_right</span>
             </button>
         </div>
     </div>
 
-    <!-- MODAL -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal" id="modal-container"></div>
     </div>

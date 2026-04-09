@@ -102,7 +102,8 @@ function categoryBadge(categoryId) {
 
 function rowsMarkup(list) {
     if (!list.length) {
-        return `<tr><td colspan="6" style="padding:48px;text-align:center;color:var(--text-muted)">${t('history.noTransactions')}</td></tr>`;
+        return `<tr><td colspan="6" style="padding:48px;text-align:center"><div style="display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-muted)"><span class="material-symbols-outlined" style="font-size:48px;opacity:0.3">history</span><div><strong>${t('history.noTransactions')}</strong><div style="font-size:12px">${t('history.noTransactionsHelp')}</div></div></div></td></tr>`;
+
     }
 
     return list.map(transaction => {

@@ -18,6 +18,7 @@ const app = {
     currentView: 'dashboard',
 
     init() {
+        this.ensureToastRoot();
         this.bindNav();
         this.bindLayoutControls();
         this.refreshSidebar();
@@ -152,6 +153,33 @@ const app = {
 
     openModal(type, data) {
         openModal(type, data);
+    },
+
+    ensureToastRoot() {
+        if (document.getElementById('app-toast-root')) return;
+        const root = document.createElement('div');
+        root.id = 'app-toast-root';
+        root.className = 'app-toast-root';
+        document.body.appendChild(root);
+    },
+
+    showToast(message, variant = 'success') {
+        if (!message) return;
+        this.ensureToastRoot();
+        const root = document.getElementById('app-toast-root');
+        if (!root) return;
+
+        const toast = document.createElement('div');
+        toast.className = `app-toast app-toast-${variant}`;
+        toast.textContent = message;
+        root.appendChild(toast);
+
+        requestAnimationFrame(() => toast.classList.add('is-visible'));
+
+        window.setTimeout(() => {
+            toast.classList.remove('is-visible');
+            window.setTimeout(() => toast.remove(), 220);
+        }, 2600);
     }
 };
 

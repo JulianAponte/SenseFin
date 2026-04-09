@@ -60,6 +60,14 @@
     --shadow-glass: 0 20px 45px rgba(0, 0, 0, 0.22);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 @media (min-width: 1800px) {
     :root {
         --sidebar-left-width: 320px;
@@ -71,5 +79,19 @@
         --fs-2xl: 1.75rem;
         --fs-3xl: 2.4rem;
         --fs-4xl: 3.5rem;
+    }
+}
+
+@media (min-width: 2560px) {
+    :root {
+        --sidebar-left-width: 360px;
+        --sidebar-right-width: 420px;
+        --fs-base: 1rem;
+        --fs-md: 1.125rem;
+        --fs-lg: 1.25rem;
+        --fs-xl: 1.5rem;
+        --fs-2xl: 2rem;
+        --fs-3xl: 2.75rem;
+        --fs-4xl: 4rem;
     }
 }

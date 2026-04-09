@@ -103,19 +103,6 @@ export function getCategoryById(categoryId) {
     return getAllCategories().find(category => category.id === categoryId) || null;
 }
 
-export function getCategoryLabel(categoryId) {
-    const category = getCategoryById(categoryId);
-    return category?.name || 'Uncategorized';
-}
-
-export function getCategoryColor(categoryId, fallback = '#1142d4') {
-    return getCategoryById(categoryId)?.color || fallback;
-}
-
-export function getCategoryIcon(categoryId, fallback = 'label') {
-    return getCategoryById(categoryId)?.icon || fallback;
-}
-
 export function addExpenseCategory({ name, color, icon, budget }) {
     const trimmedName = (name || '').trim();
     if (!trimmedName) return null;
@@ -137,6 +124,24 @@ export function addExpenseCategory({ name, color, icon, budget }) {
     return category;
 }
 
+export function updateExpenseCategory(categoryId, payload) {
+    const category = state.categories.expense.find(item => item.id === categoryId && item.custom);
+    if (!category) return null;
+
+    const trimmedName = (payload?.name || '').trim();
+    if (!trimmedName) return null;
+
+    category.name = trimmedName;
+    category.color = payload?.color || category.color;
+    category.icon = payload?.icon || category.icon;
+    if (payload && Object.hasOwn(payload, 'budget')) {
+        category.budget = Math.max(0, Number(payload.budget) || 0);
+    }
+
+    persistState();
+    return { ...category };
+}
+
 export function removeExpenseCategory(categoryId) {
     const category = getCategoryById(categoryId);
     if (!category?.custom) return;
@@ -153,14 +158,6 @@ export function removeExpenseCategory(categoryId) {
         if (receipt.categoryId === categoryId) receipt.categoryId = fallbackCategory;
     });
 
-    persistState();
-}
-
-export function updateCategoryBudgets(entries) {
-    entries.forEach(({ id, budget }) => {
-        const category = getCategoryById(id);
-        if (category?.type === 'expense') category.budget = Math.max(0, Number(budget) || 0);
-    });
     persistState();
 }
 
@@ -215,6 +212,13 @@ export function addReceipt(receipt) {
     persistState();
 }
 
+export function updateReceipt(receiptId, updates) {
+    const receipt = state.receipts.find(item => item.id === receiptId);
+    if (!receipt) return;
+    Object.assign(receipt, updates);
+    persistState();
+}
+
 export function getTransactions() {
     return state.transactions.map(item => ({ ...item }));
 }
@@ -254,59 +258,4 @@ export function getSpendingBreakdown() {
         .sort((a, b) => b.amount - a.amount);
 
     return { total, items };
-}
-
-export function getCategoryBudgetProgress() {
-    const spendingMap = new Map();
-
-    state.transactions
-        .filter(transaction => transaction.type === 'expense')
-        .forEach(transaction => {
-            const current = spendingMap.get(transaction.categoryId) || 0;
-            spendingMap.set(transaction.categoryId, current + transaction.amount);
-        });
-
-    return state.categories.expense
-        .map(category => {
-            const spent = spendingMap.get(category.id) || 0;
-            const budget = Number(category.budget) || 0;
-            const usage = budget > 0 ? Math.round((spent / budget) * 100) : 0;
-            return {
-                ...category,
-                spent,
-                remaining: Math.max(0, budget - spent),
-                usage
-            };
-        })
-        .sort((a, b) => {
-            const budgetWeight = (b.budget || 0) - (a.budget || 0);
-            if (budgetWeight !== 0) return budgetWeight;
-            return b.spent - a.spent;
-        });
-}
-
-export function getInsightsSummary() {
-    const transactions = getTransactions();
-    const income = transactions.filter(item => item.type === 'income');
-    const expense = transactions.filter(item => item.type === 'expense');
-
-    const totalIncome = income.reduce((sum, item) => sum + item.amount, 0);
-    const totalExpense = expense.reduce((sum, item) => sum + item.amount, 0);
-    const savingsRate = totalIncome > 0 ? Math.max(0, Math.round(((totalIncome - totalExpense) / totalIncome) * 100)) : 0;
-
-    const byCategory = {};
-    expense.forEach(item => {
-        byCategory[item.categoryId] = (byCategory[item.categoryId] || 0) + item.amount;
-    });
-
-    const topCategoryEntry = Object.entries(byCategory).sort((left, right) => right[1] - left[1])[0];
-
-    return {
-        totalIncome,
-        totalExpense,
-        savingsRate,
-        topCategoryId: topCategoryEntry?.[0] || null,
-        topCategoryAmount: topCategoryEntry?.[1] || 0,
-        categoryBudgetProgress: getCategoryBudgetProgress()
-    };
 }

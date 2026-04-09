@@ -13,6 +13,7 @@ function triggerDownload(filename, content, mimeType) {
     anchor.download = filename;
     anchor.click();
     URL.revokeObjectURL(url);
+    return true;
 }
 
 export function exportCsv(filename, columns, rows) {
@@ -21,12 +22,12 @@ export function exportCsv(filename, columns, rows) {
         ...rows.map(row => columns.map(column => escapeCsv(row[column.key])).join(','))
     ];
 
-    triggerDownload(filename, csvLines.join('\n'), 'text/csv;charset=utf-8');
+    return triggerDownload(filename, csvLines.join('\n'), 'text/csv;charset=utf-8');
 }
 
 export function exportPdf(title, sections) {
     const popup = window.open('', '_blank', 'width=960,height=720');
-    if (!popup) return;
+    if (!popup) return false;
 
     const htmlSections = sections.map(section => `
         <section style="margin-bottom:24px">
@@ -67,4 +68,5 @@ export function exportPdf(title, sections) {
     `);
 
     popup.document.close();
+    return true;
 }

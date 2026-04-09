@@ -1,6 +1,6 @@
 import { getLocale, t } from '../i18n.js';
 import { openDatePicker } from '../components/datePicker.js';
-import { getCategories, getCategoryById, getReceipts, getState } from '../state/store.js';
+import { getCategories, getCategoryById, getReceipts, getState, getTransactions } from '../state/store.js';
 
 const PAGE_SIZE = 8;
 
@@ -105,10 +105,38 @@ function buildPagination(total, page) {
     return buttons;
 }
 
+function getLinkedTransaction(receipt) {
+    if (!receipt.transactionId) return null;
+    return getTransactions().find(transaction => transaction.id === receipt.transactionId) || null;
+}
+
+function buildReceiptVisual(receipt) {
+    if (receipt.previewDataUrl && receipt.fileType !== 'PDF') {
+        return `<img src="${receipt.previewDataUrl}" alt="${receipt.merchant}" class="receipt-preview-image" loading="lazy">`;
+    }
+
+    const linkedTransaction = getLinkedTransaction(receipt);
+
+    return `
+        <div class="receipt-preview-doc-card">
+            <div class="receipt-preview-doc-head">
+                <span>${receipt.fileType}</span>
+                <strong>${formatCurrency(receipt.amount, receipt.transactionType === 'income' ? '+' : '-')}</strong>
+            </div>
+            <div class="receipt-preview-doc-body">
+                <strong>${receipt.merchant}</strong>
+                <span>${formatDateLabel(receipt.isoDate)}</span>
+                <span>${linkedTransaction?.description || getCategoryById(receipt.categoryId)?.name || '-'}</span>
+            </div>
+        </div>
+    `;
+}
+
 function receiptCard(receipt) {
     const category = getCategoryById(receipt.categoryId);
     const isIncome = receipt.transactionType === 'income';
     const amountClass = isIncome ? 'amount-positive' : 'amount-negative';
+    const linkedTransaction = getLinkedTransaction(receipt);
 
     return `
         <article class="glass-card receipt-card">
@@ -117,7 +145,7 @@ function receiptCard(receipt) {
                     <span class="material-symbols-outlined">download</span>
                 </button>
                 <div class="receipt-type-badge">${receipt.fileType}</div>
-                <span class="material-symbols-outlined">${receipt.icon}</span>
+                ${buildReceiptVisual(receipt)}
             </div>
             <div class="receipt-info">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
@@ -130,6 +158,7 @@ function receiptCard(receipt) {
                     </span>
                     <span style="font-size:11px;color:#64748b;font-weight:500">${formatDateLabel(receipt.isoDate)}</span>
                 </div>
+                ${linkedTransaction ? `<p class="receipt-link-copy">${t('receipts.linkedTo', { value: linkedTransaction.description })}</p>` : ''}
             </div>
         </article>
     `;
@@ -245,7 +274,7 @@ function refreshReceipts() {
     if (grid) {
         grid.innerHTML = pageItems.length
             ? pageItems.map(receiptCard).join('')
-            : `<div class="empty-state-card">${t('receipts.noReceipts')}</div>`;
+            : `<div class="empty-state-card" style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:48px"><span class="material-symbols-outlined" style="font-size:56px;opacity:0.2">receipt</span><div class="empty-state-copy"><strong>${t('receipts.noReceipts')}</strong><span>${t('receipts.noReceiptsHelp')}</span></div></div>`;
     }
 
     const info = document.getElementById('rc-pagination-info');
@@ -277,7 +306,9 @@ function refreshReceipts() {
                 receipt: {
                     ...receipt,
                     categoryName: getCategoryById(receipt.categoryId)?.name || '-',
-                    dateLabel: formatDateLabel(receipt.isoDate)
+                    dateLabel: formatDateLabel(receipt.isoDate),
+                    linkedTransactionLabel: getLinkedTransaction(receipt)?.description || '',
+                    fileName: receipt.fileName || ''
                 }
             });
         });

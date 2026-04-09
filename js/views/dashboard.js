@@ -74,7 +74,7 @@ export function renderDashboard() {
                 <div class="glow-bg" style="bottom:-96px;right:-96px;background:rgba(6,182,212,0.1)"></div>
                 <div class="chart-wide-inner chart-wide-inner-centered">
                     <div class="donut-wrapper-large">
-                        <svg class="donut-chart-large" viewBox="0 0 120 120">
+                        <svg class="donut-chart-large" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet">
                             <circle cx="60" cy="60" r="${radius}" fill="none" stroke="rgba(30,41,59,0.4)" stroke-width="5"></circle>
                             ${segments}
                         </svg>
